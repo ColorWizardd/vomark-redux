@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.4.11626.88 stable
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vomark-redux", "vomark-redux.csproj", "{92559C4B-817A-4751-9BF9-A17345E8032F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vomark-redux-test", "..\vomark-redux-test\vomark-redux-test.csproj", "{B0B98970-0458-484E-88B5-A12E2E2392F4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{92559C4B-817A-4751-9BF9-A17345E8032F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92559C4B-817A-4751-9BF9-A17345E8032F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92559C4B-817A-4751-9BF9-A17345E8032F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92559C4B-817A-4751-9BF9-A17345E8032F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0B98970-0458-484E-88B5-A12E2E2392F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0B98970-0458-484E-88B5-A12E2E2392F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0B98970-0458-484E-88B5-A12E2E2392F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0B98970-0458-484E-88B5-A12E2E2392F4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {073BBA9C-94BC-45AE-9170-ECB46D7D8380}
+	EndGlobalSection
+EndGlobal
