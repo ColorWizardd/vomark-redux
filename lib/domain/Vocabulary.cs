@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace vomark_redux.lib.domain
 {
-    internal abstract class IVocabulary
+    public abstract class IVocabulary
     {
         protected ConcurrentDictionary<string, int> _vocabList;
-        protected ITokenizer _tokenizer;
+        public ITokenizer _tokenizer;
 
         public IVocabulary(ITokenizer tokenizer)
         {
@@ -26,7 +26,7 @@ namespace vomark_redux.lib.domain
         abstract public int GetOrAddToken(string token);
     }
 
-    internal class Vocabulary : IVocabulary
+    public class Vocabulary : IVocabulary
     {
 
         public Vocabulary(ITokenizer tokenizer) : base(tokenizer) { }
@@ -37,12 +37,12 @@ namespace vomark_redux.lib.domain
         }
     }
 
-    internal interface ITokenizer
+    public interface ITokenizer
     {
         abstract int Tokenize(string inp);
     }
 
-    internal class CountTokenizer : ITokenizer
+    public class CountTokenizer : ITokenizer
     {
         protected int currCount = 0;
         public int Tokenize(string inp)
