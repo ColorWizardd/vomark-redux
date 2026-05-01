@@ -10,7 +10,7 @@ namespace vomark_redux.lib.domain
     public abstract class IVocabulary
     {
         protected ConcurrentDictionary<string, int> _vocabList;
-        public ITokenizer _tokenizer;
+        protected ITokenizer _tokenizer;
 
         public IVocabulary(ITokenizer tokenizer)
         {
@@ -21,6 +21,11 @@ namespace vomark_redux.lib.domain
         {
             _vocabList = vocabList;
             _tokenizer = tokenizer;
+        }
+
+        public List<string> GetList()
+        {
+            return [.. _vocabList.Keys];
         }
 
         abstract public int GetOrAddToken(string token);
