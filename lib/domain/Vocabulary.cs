@@ -9,6 +9,9 @@ namespace vomark_redux.lib.domain
 {
     public abstract class IVocabulary
     {
+        public const string NODE_ROOT = "VMR_NODE_ROOT";
+        public const string NODE_TERM = "VMR_NODE_TERM";
+
         protected ConcurrentDictionary<string, int> _vocabList;
         protected ITokenizer _tokenizer;
 
@@ -16,7 +19,12 @@ namespace vomark_redux.lib.domain
         {
             _tokenizer = tokenizer;
             _vocabList = [];
+            this.GetOrAddToken(NODE_ROOT);
+            this.GetOrAddToken(NODE_TERM);
         }
+
+        // For now, we'll assume that this is for loading existing data only,
+        // which SHOULD include term/root nodes.
         public IVocabulary(ITokenizer tokenizer, ConcurrentDictionary<string, int> vocabList)
         {
             _vocabList = vocabList;
