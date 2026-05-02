@@ -70,14 +70,14 @@ namespace vomark_redux.lib.domain
         }
     }
 
-    public abstract class ITraversal
+    public interface ITraversal
     {
-        internal abstract string? Next(ConcurrentDictionary<string, int> nextList, Random rand);
+        abstract string? Next(ConcurrentDictionary<string, int> nextList, Random rand);
     }
 
     public class WeightedRandTraversal : ITraversal
     {
-        internal override string? Next(ConcurrentDictionary<string, int> nextList, Random rand)
+        public string? Next(ConcurrentDictionary<string, int> nextList, Random rand)
         {
             int weightSum = nextList.Values.Sum();
             int currThresh = 0;
@@ -96,9 +96,9 @@ namespace vomark_redux.lib.domain
 
     public class GreedyTraversal : ITraversal
     {
-        internal override string? Next(ConcurrentDictionary<string, int> nextList, Random rand)
+        public string? Next(ConcurrentDictionary<string, int> nextList, Random rand)
         {
-            return nextList.Max().Key;
+            return nextList.MaxBy(x => x.Value).Key;
         }
     }
 

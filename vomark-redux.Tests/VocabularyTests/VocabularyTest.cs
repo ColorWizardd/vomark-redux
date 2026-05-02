@@ -16,15 +16,19 @@ namespace vomark_redux.Tests.VocabularyTests
             [Fact]
             public void TestAddToken()
             {
+                // Vocabs initialize with ROOT/TERM nodes already
                 FakeTokenizer ft = new();
                 Vocabulary voc = new(ft);
 
-                voc.GetOrAddToken("test1");
-                voc.GetOrAddToken("test2");
                 List<string> vList = voc.GetList();
                 Assert.Equal(2, vList.Count);
-                Assert.Equal("test1", vList[0]);
-                Assert.Equal(1, voc.GetOrAddToken("test2"));
+
+                voc.GetOrAddToken("test1");
+                voc.GetOrAddToken("test2");
+                vList = voc.GetList();
+                Assert.Equal(4, vList.Count);
+                Assert.Equal("test1", vList[1]);
+                Assert.Equal(3, voc.GetOrAddToken("test2"));
             }
         }
     }
