@@ -15,8 +15,9 @@ namespace vomark_redux.lib.domain
         protected ITraversal? _traversal;
         protected ITokenizer? _tokenizer;
         protected Random? _rand;
-        protected string _name;
+        protected string? _name;
 
+        public IGraph() { _edgeList = []; }
         public IGraph(string name) { _name = name; _edgeList = []; }
         public void SetVocabulary(IVocabulary voc) { _vocabulary = voc; }
         public void SetTraversal(ITraversal tra) { _traversal = tra; }
@@ -33,6 +34,8 @@ namespace vomark_redux.lib.domain
 
     public class Graph : IGraph
     {
+        public Graph() : base() { }
+
         public Graph(string name) : base(name) { }
 
         public override void AddOrStrengthenEdge(string from, string to, int weight = 1)
