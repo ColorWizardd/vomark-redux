@@ -28,6 +28,7 @@ namespace vomark_redux.lib.domain
         abstract public int GetWeight(string from, string to);
         abstract public string? GetNextNode(string curr);
         abstract public ConcurrentDictionary<string, int>? FindAllNext(string curr);
+        abstract public ConcurrentDictionary<string, ConcurrentDictionary<string, int>> GetEdgeList();
     }
 
     public class Graph : IGraph
@@ -46,6 +47,11 @@ namespace vomark_redux.lib.domain
                 return nextList;
             }
             return null;
+        }
+
+        public override ConcurrentDictionary<string, ConcurrentDictionary<string, int>> GetEdgeList()
+        {
+            return _edgeList;
         }
 
         public override string? GetNextNode(string curr)
