@@ -7,4 +7,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="vomark-redux.Tests\**" />
+    <EmbeddedResource Remove="vomark-redux.Tests\**" />
+    <None Remove="vomark-redux.Tests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="lib\svc\" />
+  </ItemGroup>
+
 </Project>
