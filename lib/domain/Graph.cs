@@ -52,6 +52,12 @@ namespace vomark_redux.lib.domain
 
         public override void AddOrStrengthenEdge(string from, string to, int weight = 1)
         {
+            if(_vocabulary == null)
+            {
+                return;
+            }
+            _vocabulary.GetOrAddToken(from);
+            _vocabulary.GetOrAddToken(to);
             var nextList = _edgeList.GetOrAdd(from, x => new ConcurrentDictionary<string, int>());
             nextList.AddOrUpdate(to, weight, (x, oldWeight) => weight + oldWeight);
         }
