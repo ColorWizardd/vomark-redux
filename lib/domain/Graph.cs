@@ -19,16 +19,7 @@ namespace vomark_redux.lib.domain
 
         public IGraph() { _edgeList = []; }
         public IGraph(string name) { _name = name; _edgeList = []; }
-        public  IGraph(GraphBuilder gb)
-        {
-            _vocabulary = gb.Vocabulary;
-            _tokenizer = gb.Tokenizer;
-            _traversal = gb.Traversal;
-            _rand = gb.Random;
-            _name = gb.Name;
-
-            _edgeList = [];
-        }
+        
         public void SetVocabulary(IVocabulary voc) { _vocabulary = voc; }
         public void SetTraversal(ITraversal tra) { _traversal = tra; }
         public void SetName(string name) { _name = name; }
@@ -47,9 +38,17 @@ namespace vomark_redux.lib.domain
     {
         public Graph() : base() { }
 
-        public Graph(GraphBuilder gb) : base(gb) { }
-        public Graph(string name) : base(name) { }
+        public Graph(GraphBuilder gb) : base()
+        {
+            _vocabulary = gb.Vocabulary;
+            _tokenizer = gb.Tokenizer;
+            _traversal = gb.Traversal;
+            _rand = gb.Random;
+            _name = gb.Name;
 
+            _edgeList = [];
+        }
+        public Graph(string name) : base(name) { }
 
         public override void AddOrStrengthenEdge(string from, string to, int weight = 1)
         {

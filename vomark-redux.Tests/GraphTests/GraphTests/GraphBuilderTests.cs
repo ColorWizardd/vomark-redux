@@ -19,7 +19,7 @@ namespace vomark_redux.Tests.GraphTests.GraphTests
             {
                 GraphBuilder gb = new();
                 FakeTokenizer ft = new();
-                Graph testGraph = (Graph)gb.AddName("test")
+                Graph testGraph = gb.AddName("test")
                     .AddTokenizer(ft)
                     .AddTraversal(new FakeTraversal())
                     .AddVocabulary(new FakeVocabulary(ft))
@@ -37,7 +37,7 @@ namespace vomark_redux.Tests.GraphTests.GraphTests
                 {
                     GraphBuilder gb = new();
                     FakeTokenizer ft = new();
-                    Graph testGraph = (Graph)gb.AddName("test")
+                    Graph testGraph = gb.AddName("test")
                         .AddTokenizer(ft)
                         .AddTraversal(new FakeTraversal())
                         .AddVocabulary(new FakeVocabulary(ft))
@@ -54,7 +54,7 @@ namespace vomark_redux.Tests.GraphTests.GraphTests
                 {
                     GraphBuilder gb = new();
                     FakeTokenizer ft = new();
-                    Graph testGraph = (Graph)gb.AddName("test")
+                    Graph testGraph = gb.AddName("test")
                         .AddTokenizer(ft)
                         .AddRandom(new Random())
                         .AddVocabulary(new FakeVocabulary(ft))
@@ -71,7 +71,7 @@ namespace vomark_redux.Tests.GraphTests.GraphTests
                 {
                     GraphBuilder gb = new();
                     FakeTokenizer ft = new();
-                    Graph testGraph = (Graph)gb.AddName("test")
+                    Graph testGraph = gb.AddName("test")
                         .AddTokenizer(ft)
                         .AddRandom(new Random())
                         .AddTraversal(new FakeTraversal())

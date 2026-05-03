@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace vomark_redux.lib.domain
 {
-    public abstract class IGBuilder
+    public abstract class IGBuilder<G> where G : IGraph
     {
         internal IVocabulary? Vocabulary { get; set; }
         internal ITokenizer? Tokenizer { get; set; }
@@ -15,48 +15,48 @@ namespace vomark_redux.lib.domain
         internal string? Name { get; set; }
 
         public IGBuilder() { }
-        public abstract IGBuilder AddTokenizer(ITokenizer t);
-        public abstract IGBuilder AddVocabulary(IVocabulary v);
-        public abstract IGBuilder AddTraversal(ITraversal t);
-        public abstract IGBuilder AddName(string name);
-        public abstract IGBuilder AddRandom(Random rand);
-        public abstract IGraph Build();
+        public abstract IGBuilder<G> AddTokenizer(ITokenizer t);
+        public abstract IGBuilder<G> AddVocabulary(IVocabulary v);
+        public abstract IGBuilder<G> AddTraversal(ITraversal t);
+        public abstract IGBuilder<G> AddName(string name);
+        public abstract IGBuilder<G> AddRandom(Random rand);
+        public abstract G Build();
 
     }
 
-    public class GraphBuilder : IGBuilder
+    public class GraphBuilder : IGBuilder<Graph>
     {
-        public override IGBuilder AddName(string name)
+        public override IGBuilder<Graph> AddName(string name)
         {
             this.Name = name;
             return this;
         }
 
-        public override IGBuilder AddRandom(Random rand)
+        public override IGBuilder<Graph> AddRandom(Random rand)
         {
             this.Random = rand;
             return this;
         }
 
-        public override IGBuilder AddTokenizer(ITokenizer t)
+        public override IGBuilder<Graph> AddTokenizer(ITokenizer t)
         {
             this.Tokenizer = t;
             return this;
         }
 
-        public override IGBuilder AddTraversal(ITraversal t)
+        public override IGBuilder<Graph> AddTraversal(ITraversal t)
         {
             this.Traversal = t;
             return this;
         }
 
-        public override IGBuilder AddVocabulary(IVocabulary v)
+        public override IGBuilder<Graph> AddVocabulary(IVocabulary v)
         {
             this.Vocabulary = v;
             return this;
         }
 
-        public override IGraph Build()
+        public override Graph Build()
         {
             if (Random == null)
             {
