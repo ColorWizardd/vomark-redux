@@ -13,8 +13,4 @@
     <None Remove="vomark-redux.Tests\**" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="lib\repo\" />
-  </ItemGroup>
-
 </Project>

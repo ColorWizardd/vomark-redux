@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using vomark_redux.lib.domain;
+using vomark_redux.lib.svc;
 
 namespace vomark_redux.Tests
 {
@@ -52,6 +53,60 @@ namespace vomark_redux.Tests
             {
                 return _vocabList.GetOrAdd(token, x => _tokenizer.Tokenize(token));
             }
+        }
+
+        /**
+         * Can't think of a good way to trim down behavior, so we'll just replicate the concrete
+         * Graph for now.
+         * Only difference is a quick construction.
+         */
+        public class FakeGraph : Graph
+        {
+            public FakeGraph(string name) : base(name)
+            {
+                _rand = new Random();
+                _tokenizer = new FakeTokenizer();
+                _vocabulary = new FakeVocabulary(_tokenizer);
+                _traversal = new FakeTraversal();
+            }
+            public override void AddOrStrengthenEdge(string from, string to, int weight = 1)
+            {
+                base.AddOrStrengthenEdge(from, to);
+            }
+
+            public override ConcurrentDictionary<string, int>? FindAllNext(string curr)
+            {
+                return base.FindAllNext(curr);
+            }
+
+            public override ConcurrentDictionary<string, ConcurrentDictionary<string, int>> GetEdgeList()
+            {
+                return base.GetEdgeList();
+            }
+
+            public override string? GetName()
+            {
+                return this._name;
+            }
+
+            public override string? GetNextNode(string curr)
+            {
+                return base.GetNextNode(curr);
+            }
+
+            public override int GetWeight(string from, string to)
+            {
+                return base.GetWeight(from, to);
+            }
+        }
+
+        // FAKE JUST SPLITS ON SPACES!!!
+        internal class FakeParser : ISentenceParser
+        {
+            public List<string> Parse(string inp)
+            {
+                return [.. inp.Split(" ")];
+            } 
         }
     }
 }

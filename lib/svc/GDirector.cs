@@ -10,27 +10,28 @@ using vomark_redux.lib.domain;
 
 namespace vomark_redux.lib.svc
 {
-    internal abstract class IGDirector
+    public abstract class IGDirector<G> where G : IGraph
     {
         internal const string ERR_NAME_MISSING = "ERR_NAME_MISSING";
-        internal ConcurrentDictionary<string, IGraph> GraphSet { get; private set; } = [];
+        internal ConcurrentDictionary<string, G> GraphSet { get; private set; } = [];
         internal ISentenceParser Parser { get; private set; }
 
-        internal IGDirector(ISentenceParser p)
+        public IGDirector(ISentenceParser p)
         {
             Parser = p;
         }
 
-        abstract public void AddGraph(IGraph g);
-        abstract public IGraph FindGraph(string gName);
-        abstract public IGraph CombineGraphs(string g1, string g2);
-        abstract public void SendSentence(string inp, IGraph g);
+        abstract public void AddGraph(G g);
+        abstract public G FindGraph(string gName);
+        abstract public ConcurrentDictionary<string, G> GetGraphSet();
+        abstract public G CombineGraphs(string g1, string g2);
+        abstract public void SendSentence(string inp, G g);
     }
 
-    internal class GraphDirector : IGDirector
+    public class GraphDirector<G> : IGDirector<G> where G: IGraph
     {
-        GraphDirector(ISentenceParser p) : base(p) { }
-        public override void AddGraph(IGraph g)
+        public GraphDirector(ISentenceParser p) : base(p) { }
+        public override void AddGraph(G g)
         {
             string n = g.GetName() ?? ERR_NAME_MISSING;
             if(n == ERR_NAME_MISSING)
@@ -43,16 +44,16 @@ namespace vomark_redux.lib.svc
             }
         }
 
-        public override IGraph CombineGraphs(string g1, string g2)
+        public override G CombineGraphs(string g1, string g2)
         {
-            GraphSet.TryGetValue(g1, out IGraph? graph1);
-            GraphSet.TryGetValue(g2, out IGraph? graph2);
+            GraphSet.TryGetValue(g1, out G? graph1);
+            GraphSet.TryGetValue(g2, out G? graph2);
 
             if(graph1 == null || graph2 == null)
             {
                 throw new ArgumentException("One or more specfied graphs do not exist in the set");
             }
-            IGraph res = graph1;
+            G res = graph1;
             foreach(var edge in graph2.GetEdgeList())
             {
                 foreach(var next in edge.Value)
@@ -63,12 +64,16 @@ namespace vomark_redux.lib.svc
             return res;
         }
 
-        public override IGraph FindGraph(string gName)
+        public override G FindGraph(string gName)
         {
-            throw new NotImplementedException();
+            if(GraphSet.TryGetValue(gName, out G? res))
+            {
+                return res;
+            }
+            throw new ArgumentException("No graph found with the given name");
         }
 
-        public override void SendSentence(string inp, IGraph g)
+        public override void SendSentence(string inp, G g)
         {
             List<string> wordList = Parser.Parse(inp);
             g.AddOrStrengthenEdge(Vocabulary.NODE_ROOT, wordList[0]);
@@ -81,6 +86,11 @@ namespace vomark_redux.lib.svc
             }
             g.AddOrStrengthenEdge(wordList[^1], Vocabulary.NODE_TERM);
         }
+
+        public override ConcurrentDictionary<string, G> GetGraphSet()
+        {
+            return GraphSet;
+        }
     }
 
     public interface ISentenceParser
@@ -88,7 +98,7 @@ namespace vomark_redux.lib.svc
         /**
          * Meant to parse ONE SENTENCE AT A TIME
          */
-        abstract List<string> Parse(string inp);
+        public abstract List<string> Parse(string inp);
     }
 
     /** 

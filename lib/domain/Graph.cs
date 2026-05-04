@@ -45,8 +45,6 @@ namespace vomark_redux.lib.domain
             _traversal = gb.Traversal;
             _rand = gb.Random;
             _name = gb.Name;
-
-            _edgeList = [];
         }
         public Graph(string name) : base(name) { }
 
