@@ -109,13 +109,17 @@ namespace vomark_redux.lib.domain
     {
         public string? Next(ConcurrentDictionary<string, int> nextList, Random rand)
         {
+            if (nextList.IsEmpty)
+            {
+                return null;
+            }
             int weightSum = nextList.Values.Sum();
             int currThresh = 0;
             int thresh = rand.Next(0, weightSum);
             foreach(string key in nextList.Keys)
             {
                 currThresh += nextList[key];
-                if(currThresh >= thresh)
+                if(currThresh > thresh)
                 {
                     return key;
                 }
@@ -128,6 +132,10 @@ namespace vomark_redux.lib.domain
     {
         public string? Next(ConcurrentDictionary<string, int> nextList, Random rand)
         {
+            if (nextList.IsEmpty)
+            {
+                return null;
+            }
             return nextList.MaxBy(x => x.Value).Key;
         }
     }

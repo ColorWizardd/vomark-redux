@@ -37,6 +37,7 @@ namespace vomark_redux.Tests
             {
                 return nextList.MaxBy(x => x.Value).Key;
             }
+
         }
 
         internal class FakeVocabulary : IVocabulary
@@ -107,6 +108,17 @@ namespace vomark_redux.Tests
             {
                 return [.. inp.Split(" ")];
             } 
+        }
+
+        internal class FakeTravData
+        {
+            public static ConcurrentDictionary<string, int> BaseTravData()
+            {
+                var res = new ConcurrentDictionary<string, int>();
+                res.TryAdd("test1", 1);
+                res.TryAdd("test2", 5);
+                return res;
+            }
         }
     }
 }
