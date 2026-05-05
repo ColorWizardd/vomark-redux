@@ -15,9 +15,11 @@ namespace vomark_redux.lib.domain
         protected ITraversal? _traversal;
         protected ITokenizer? _tokenizer;
         protected Random? _rand;
-        protected string _name;
+        protected string? _name;
 
+        public IGraph() { _edgeList = []; }
         public IGraph(string name) { _name = name; _edgeList = []; }
+        
         public void SetVocabulary(IVocabulary voc) { _vocabulary = voc; }
         public void SetTraversal(ITraversal tra) { _traversal = tra; }
         public void SetName(string name) { _name = name; }
@@ -26,6 +28,7 @@ namespace vomark_redux.lib.domain
 
         abstract public void AddOrStrengthenEdge(string from, string to, int weight = 1);
         abstract public int GetWeight(string from, string to);
+        abstract public string? GetName();
         abstract public string? GetNextNode(string curr);
         abstract public ConcurrentDictionary<string, int>? FindAllNext(string curr);
         abstract public ConcurrentDictionary<string, ConcurrentDictionary<string, int>> GetEdgeList();
@@ -33,10 +36,26 @@ namespace vomark_redux.lib.domain
 
     public class Graph : IGraph
     {
+        public Graph() : base() { }
+
+        public Graph(GraphBuilder gb) : base()
+        {
+            _vocabulary = gb.Vocabulary;
+            _tokenizer = gb.Tokenizer;
+            _traversal = gb.Traversal;
+            _rand = gb.Random;
+            _name = gb.Name;
+        }
         public Graph(string name) : base(name) { }
 
         public override void AddOrStrengthenEdge(string from, string to, int weight = 1)
         {
+            if(_vocabulary == null)
+            {
+                return;
+            }
+            _vocabulary.GetOrAddToken(from);
+            _vocabulary.GetOrAddToken(to);
             var nextList = _edgeList.GetOrAdd(from, x => new ConcurrentDictionary<string, int>());
             nextList.AddOrUpdate(to, weight, (x, oldWeight) => weight + oldWeight);
         }
@@ -52,6 +71,11 @@ namespace vomark_redux.lib.domain
         public override ConcurrentDictionary<string, ConcurrentDictionary<string, int>> GetEdgeList()
         {
             return _edgeList;
+        }
+
+        public override string? GetName()
+        {
+            return _name;
         }
 
         public override string? GetNextNode(string curr)
@@ -85,13 +109,17 @@ namespace vomark_redux.lib.domain
     {
         public string? Next(ConcurrentDictionary<string, int> nextList, Random rand)
         {
+            if (nextList.IsEmpty)
+            {
+                return null;
+            }
             int weightSum = nextList.Values.Sum();
             int currThresh = 0;
             int thresh = rand.Next(0, weightSum);
             foreach(string key in nextList.Keys)
             {
                 currThresh += nextList[key];
-                if(currThresh >= thresh)
+                if(currThresh > thresh)
                 {
                     return key;
                 }
@@ -104,6 +132,10 @@ namespace vomark_redux.lib.domain
     {
         public string? Next(ConcurrentDictionary<string, int> nextList, Random rand)
         {
+            if (nextList.IsEmpty)
+            {
+                return null;
+            }
             return nextList.MaxBy(x => x.Value).Key;
         }
     }

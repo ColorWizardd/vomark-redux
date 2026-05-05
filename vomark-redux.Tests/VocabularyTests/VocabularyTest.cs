@@ -30,6 +30,15 @@ namespace vomark_redux.Tests.VocabularyTests
                 Assert.Equal("test1", vList[1]);
                 Assert.Equal(3, voc.GetOrAddToken("test2"));
             }
+
+            [Fact]
+            public void TestExistingList()
+            {
+                FakeTokenizer ft = new();
+                Vocabulary voc = new(ft, ["test1", "test2"]);
+                Assert.Equal(0, voc.GetOrAddToken("test1"));
+                Assert.Equal(1, voc.GetOrAddToken("test2"));
+            }
         }
     }
 }

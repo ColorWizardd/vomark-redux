@@ -19,16 +19,20 @@ namespace vomark_redux.lib.domain
         {
             _tokenizer = tokenizer;
             _vocabList = [];
-            this.GetOrAddToken(NODE_ROOT);
-            this.GetOrAddToken(NODE_TERM);
+            GetOrAddToken(NODE_ROOT);
+            GetOrAddToken(NODE_TERM);
         }
 
         // For now, we'll assume that this is for loading existing data only,
         // which SHOULD include term/root nodes.
-        public IVocabulary(ITokenizer tokenizer, ConcurrentDictionary<string, int> vocabList)
+        public IVocabulary(ITokenizer tokenizer, List<string> vocabList)
         {
-            _vocabList = vocabList;
+            _vocabList = new();
             _tokenizer = tokenizer;
+            foreach (string voc in vocabList)
+            {
+                GetOrAddToken(voc);
+            }
         }
 
         public List<string> GetList()
@@ -43,7 +47,7 @@ namespace vomark_redux.lib.domain
     {
 
         public Vocabulary(ITokenizer tokenizer) : base(tokenizer) { }
-        public Vocabulary(ITokenizer tokenizer, ConcurrentDictionary<string, int> vocabList) : base(tokenizer, vocabList) { }
+        public Vocabulary(ITokenizer tokenizer, List<string> vocabList) : base(tokenizer, vocabList) { }
         public override int GetOrAddToken(string token)
         {
             return _vocabList.GetOrAdd(token, x => _tokenizer.Tokenize(token));

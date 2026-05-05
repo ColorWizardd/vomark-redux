@@ -29,12 +29,13 @@ namespace vomark_redux.Tests.GraphTests.GraphTests
                 FakeTraversal traversal = new();
                 FakeVocabulary vocab = new(tokenizer);
 
-                Graph graph = new("Fake");
+                Graph graph = new();
 
                 graph.SetRandom(new Random());
                 graph.SetTraversal(traversal);
                 graph.SetVocabulary(vocab);
                 graph.SetTokenizer(tokenizer);
+                graph.SetName("Fake");
 
                 graph.AddOrStrengthenEdge(words[0], words[1]);
                 graph.AddOrStrengthenEdge(words[1], words[2]);
@@ -106,7 +107,23 @@ namespace vomark_redux.Tests.GraphTests.GraphTests
                 Assert.Null(graph.GetNextNode(words[0]));
             }
 
+            [Fact]
+            public void TestMissingVocabulary()
+            {
+                // AddOrStrengthenEdge should return w/ no-op if no vocab is implemented.
+                // Therefore, null vocab shouldn't result in edgeList additions.
+                FakeTokenizer tokenizer = new();
+                FakeTraversal traversal = new();
 
+                Graph graph = new();
+
+                graph.SetRandom(new Random());
+                graph.SetTraversal(traversal);
+                graph.SetTokenizer(tokenizer);
+
+                graph.AddOrStrengthenEdge(words[0], words[1]);
+                Assert.Empty(graph.GetEdgeList());
+            }
         }
     }
 }
