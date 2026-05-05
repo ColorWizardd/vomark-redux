@@ -34,6 +34,7 @@ namespace vomark_redux.lib.svc
         public override void AddGraph(G g)
         {
             string n = g.GetName() ?? ERR_NAME_MISSING;
+            n = (n != string.Empty) ? n : ERR_NAME_MISSING;
             if(n == ERR_NAME_MISSING)
             {
                 throw new ArgumentException("Graph does not contain name, cannot be added to set");
