@@ -58,6 +58,14 @@ jobs:
         COVERAGE=$(grep "Line coverage" ./vomark-redux.Tests/${REPORT_DEST}/reports/Summary.txt | sed -E 's/.*: ([0-9.]+)%.*/\1/')
         echo "coverage=$COVERAGE" >> $GITHUB_OUTPUT
 
+    - name: Ensure Master is current
+      run: |
+        git config user.name "github-actions"
+        git config user.email "actions@github.com"
+        git fetch origin
+        git checkout master
+        git reset --hard origin/master
+
     - name: Update coverage badge
       run: |
         COVERAGE=${{ steps.coverage.outputs.coverage }}
@@ -65,11 +73,6 @@ jobs:
 
     - name: Commit badge update
       run: |
-        git config user.name "github-actions"
-        git config user.email "actions@github.com"
-        git fetch origin
-        git checkout master
-        git reset --hard origin/master
         git add README.md
         git commit -m "AUTOMATED - Updated coverage badge [skip ci]"
         git push origin HEAD:master
