@@ -39,7 +39,7 @@ jobs:
       run:
         dotnet test
         /p:CollectCoverage=True
-        /p:CoverletOutput=./$REPORT_DEST/
+        /p:CoverletOutput=./$REPORT_DEST/coverage.cobertura.xml
         /p:CoverletOutputFormat=cobertura
 
     - name: Install report generator
