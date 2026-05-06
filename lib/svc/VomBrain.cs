@@ -13,6 +13,7 @@ namespace vomark_redux.lib.svc
         const UInt16 MAX_LEN = 64;
         protected IGDirector<G> Director { get; private set; }
         public IVomBrain(IGDirector<G> director){ Director = director;}
+        public abstract void AddExistingGraph(G g);
         public abstract void AddData(string data, List<string> targs, IDataParser parser);
         public abstract string GenSentence(List<string> targs, IPuncBehavior ip, ICapBehavior ic, int maxLen = MAX_LEN);
     }
@@ -33,6 +34,11 @@ namespace vomark_redux.lib.svc
             }
         }
 
+        public override void AddExistingGraph(G g)
+        {
+            Director.AddGraph(g);
+        }
+
         public override string GenSentence(List<string> targs, IPuncBehavior ip, ICapBehavior ic, int maxLen = 64)
         {
             try
@@ -46,6 +52,7 @@ namespace vomark_redux.lib.svc
             {
                 //PLACEHOLDER - WILL MAYBE GET LOGGING SET UP? IDK TOO MUCH FOR A LIB I GUESS.
                 Console.WriteLine(e.Message);
+                throw;
             }
             return "";
         }
@@ -67,7 +74,7 @@ namespace vomark_redux.lib.svc
             return [.. RegPattern().Split(inp)];
         }
 
-        [GeneratedRegex(@"[.!?\n ]+")]
+        [GeneratedRegex(@"[.!?\n]+")]
         public static partial Regex RegPattern();
     }
 }

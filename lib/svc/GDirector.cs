@@ -72,7 +72,7 @@ namespace vomark_redux.lib.svc
             int count = g.Count;
             if (count == 0)
             {
-                throw new ArgumentException("One or more specfied graphs do not exist in the set");
+                throw new ArgumentException("Cannot combine an empty graph set");
             }
             G curr = FindGraph(g[0]);
             for(int i = 1; i < count; ++i)
@@ -93,6 +93,10 @@ namespace vomark_redux.lib.svc
 
         public override void SendSentence(string inp, G g)
         {
+            if(inp == string.Empty)
+            {
+                return;
+            }
             List<string> wordList = Parser.Parse(inp);
             g.AddOrStrengthenEdge(Vocabulary.NODE_ROOT, wordList[0]);
             if(wordList.Count > 1)
@@ -125,8 +129,12 @@ namespace vomark_redux.lib.svc
                 sb.Append(' ');
             }
             string res = sb.ToString().TrimEnd();
-            ic.ApplyBehavior(res);
-            ip.ApplyBehavior(res);
+            if(res == string.Empty)
+            {
+                return res;
+            }
+            res = ic.ApplyBehavior(res);
+            res = ip.ApplyBehavior(res);
             return res;
         }
     }

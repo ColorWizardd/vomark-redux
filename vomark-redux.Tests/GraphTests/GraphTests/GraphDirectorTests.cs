@@ -115,7 +115,7 @@ namespace vomark_redux.Tests.GraphTests.GraphTests
             {
                 GraphDirector<FakeGraph> gd = new(new FakeParser());
                 string gName = "fake1";
-                string inp = "this is a sentence.";
+                string inp = "this is a sentence";
                 gd.AddGraph(new(gName));
                 gd.SendSentence(inp, gd.FindGraph(gName));
                 string res = gd.GenSentence(
@@ -124,7 +124,7 @@ namespace vomark_redux.Tests.GraphTests.GraphTests
                     new FakeCapBehavior(),
                     128
                     );
-                Assert.Equal(inp, res);
+                Assert.Equal("this is a sentence.", res);
             }
 
             [Fact]
@@ -133,7 +133,7 @@ namespace vomark_redux.Tests.GraphTests.GraphTests
                 GraphDirector<FakeGraph> gd = new(new FakeParser());
                 string gName = "fake1";
                 gd.AddGraph(new(gName));
-                gd.SendSentence(" ", gd.FindGraph(gName));
+                gd.SendSentence("", gd.FindGraph(gName));
                 Assert.Empty(
                     gd.GenSentence(gd.FindGraph(gName),
                         new FakePuncBehavior(),
