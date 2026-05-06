@@ -76,8 +76,13 @@ jobs:
       run: |
         git add vomark-redux.Tests/coverage/
         git add README.md
-        git commit -m "AUTOMATED - Updated coverage badge [skip ci]"
-        git push origin HEAD:master
+
+        if git diff --cached --quiet; then
+          echo "No changes to code coverage"
+        else
+          git commit -m "AUTOMATED - Updated coverage badge [skip ci]"
+          git push origin HEAD:master
+        fi
 
 
 
