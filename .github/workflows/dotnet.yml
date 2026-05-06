@@ -39,14 +39,11 @@ jobs:
       run: |
         dotnet test ./vomark-redux.Tests \
         /p:CollectCoverage=True \
-        /p:CoverletOutput=./$REPORT_DEST/coverage.cobertura.xml \
+        /p:CoverletOutput=./$REPORT_DEST/ \
         /p:CoverletOutputFormat=cobertura
 
     - name: Install report generator
       run: dotnet tool install -g dotnet-reportgenerator-globaltool
-
-    - name: Insanity stupid debug check
-      run: ls -R
     
     - name: Generate coverage report
       run: | 
