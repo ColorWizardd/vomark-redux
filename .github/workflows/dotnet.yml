@@ -36,8 +36,8 @@ jobs:
       run: dotnet build --no-restore
 
     - name: Test with coverage
-      run: | 
-        dotnet test --no-build --verbosity normal \
+      run:
+        dotnet test \
         /p:CollectCoverage=True \
         /p:CoverletOutput=./$REPORT_DEST/ \
         /p:CoverletOutputFormat=cobertura
