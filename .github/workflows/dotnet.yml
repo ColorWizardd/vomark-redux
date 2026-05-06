@@ -49,7 +49,7 @@ jobs:
       run: | 
         reportgenerator \
         -reports:./vomark-redux.Tests/$REPORT_DEST/coverage.cobertura.xml \
-        -targetdir:./vomark-redux.Tests$REPORT_DEST/reports \
+        -targetdir:./vomark-redux.Tests/$REPORT_DEST/reports \
         -reporttypes:textsummary
 
     - name: Get line coverage
