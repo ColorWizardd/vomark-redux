@@ -120,5 +120,21 @@ namespace vomark_redux.Tests
                 return res;
             }
         }
+
+        internal class FakePuncBehavior : IPuncBehavior
+        {
+            public string ApplyBehavior(string inp)
+            {
+                return string.Concat(inp, '.');
+            }
+        }
+
+        internal class FakeCapBehavior : ICapBehavior
+        {
+            public string ApplyBehavior(string inp)
+            {
+                return inp;
+            }
+        }
     }
 }

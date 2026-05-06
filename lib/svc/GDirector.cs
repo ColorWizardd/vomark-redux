@@ -117,14 +117,14 @@ namespace vomark_redux.lib.svc
             for (int i = 0; i < maxLen; ++i)
             {
                 curr = g.GetNextNode(curr);
-                sb.Append(curr);
                 if(curr == null || curr == Vocabulary.NODE_TERM)
                 {
                     break;
                 }
+                sb.Append(curr);
                 sb.Append(' ');
             }
-            string res = sb.ToString();
+            string res = sb.ToString().TrimEnd();
             ic.ApplyBehavior(res);
             ip.ApplyBehavior(res);
             return res;
