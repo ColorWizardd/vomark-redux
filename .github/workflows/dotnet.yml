@@ -36,19 +36,20 @@ jobs:
       run: dotnet build --no-restore
 
     - name: Test with coverage
-      run:
-        dotnet test
-        /p:CollectCoverage=True
-        /p:CoverletOutput=./$REPORT_DEST/coverage.cobertura.xml
+      run: |
+        dotnet test ./vomark-redux.Tests \
+        /p:CollectCoverage=True \
+        /p:CoverletOutput=./$REPORT_DEST/coverage.cobertura.xml \
         /p:CoverletOutputFormat=cobertura
 
     - name: Install report generator
       run: dotnet tool install -g dotnet-reportgenerator-globaltool
     
     - name: Generate coverage report
-      run: reportgenerator
-        -reports:./vomark-redux.Tests/$REPORT_DEST/coverage.cobertura.xml
-        -targetdir:./vomark-redux.Tests$REPORT_DEST/reports
+      run: | 
+        reportgenerator \
+        -reports:./vomark-redux.Tests/$REPORT_DEST/coverage.cobertura.xml \
+        -targetdir:./vomark-redux.Tests$REPORT_DEST/reports \
         -reporttypes:textsummary
 
     - name: Get line coverage
