@@ -41,10 +41,12 @@ jobs:
         /p:CollectCoverage=True \
         /p:CoverletOutput=./$REPORT_DEST \
         /p:CoverletOutputFormat=cobertura
+
+    - name: Install report generator
+      run: dotnet tool install -g dotnet-reportgenerator-globaltool
     
     - name: Generate coverage report
-      run: dotnet tool install -g dotnet-reportgenerator-globaltool \
-        reportgenerator\
+      run: reportgenerator \
         -reports:$REPORT_DEST/coverage.cobertura.xml \
         -targetdir:$REPORT_DEST/reports \
         -reporttypes:textsummary
