@@ -1,0 +1,36 @@
+Summary
+  Generated on: 05/06/2026 - 01:50:21
+  Coverage date: 05/06/2026 - 01:50:18
+  Parser: Cobertura
+  Assemblies: 1
+  Classes: 14
+  Files: 5
+  Line coverage: 95.4%
+  Covered lines: 336
+  Uncovered lines: 16
+  Coverable lines: 352
+  Total lines: 624
+  Branch coverage: 84% (84 of 100)
+  Covered branches: 84
+  Total branches: 100
+  Method coverage: 98.4% (62 of 63)
+  Full method coverage: 92% (58 of 63)
+  Covered methods: 62
+  Fully covered methods: 58
+  Total methods: 63
+
+vomark-redux                                                                                                                                   95.4%
+  System.Text.RegularExpressions.Generated                                                                                                     96.2%
+  System.Text.RegularExpressions.Generated.<RegexGenerator_g>F52859F7BD9911AA425FA65C5E8EE356805DA3153EB9A73659565FC23EE4558FE__RegPattern_0   95.5%
+  vomark_redux.lib.domain.CountTokenizer                                                                                                        100%
+  vomark_redux.lib.domain.Graph                                                                                                                84.4%
+  vomark_redux.lib.domain.GraphBuilder                                                                                                          100%
+  vomark_redux.lib.domain.GreedyTraversal                                                                                                       100%
+  vomark_redux.lib.domain.IGBuilder<T>                                                                                                          100%
+  vomark_redux.lib.domain.IGraph                                                                                                                100%
+  vomark_redux.lib.domain.IVocabulary                                                                                                           100%
+  vomark_redux.lib.domain.Vocabulary                                                                                                            100%
+  vomark_redux.lib.domain.WeightedRandTraversal                                                                                                93.7%
+  vomark_redux.lib.svc.BasicPuncParser                                                                                                          100%
+  vomark_redux.lib.svc.GraphDirector<T>                                                                                                        95.8%
+  vomark_redux.lib.svc.IGDirector<T>                                                                                                            100%
