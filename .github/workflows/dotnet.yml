@@ -47,14 +47,14 @@ jobs:
     
     - name: Generate coverage report
       run: reportgenerator \
-        -reports:$REPORT_DEST/coverage.cobertura.xml \
-        -targetdir:$REPORT_DEST/reports \
+        -reports:./vomark-redux.Tests/$REPORT_DEST/coverage.cobertura.xml \
+        -targetdir:./vomark-redux.Tests$REPORT_DEST/reports \
         -reporttypes:textsummary
 
     - name: Get line coverage
       id: coverage
       run: | 
-        COVERAGE=$(grep "Line coverage" coverage/report/Summary.txt | sed -E 's/.*: ([0-9.]+)%.*/\1/')
+        COVERAGE=$(grep "Line coverage" ./vomark-redux.Tests/${REPORT_DEST}/reports/Summary.txt | sed -E 's/.*: ([0-9.]+)%.*/\1/')
         echo "coverage=$COVERAGE" >> $GITHUB_OUTPUT
 
     - name: Update coverage badge
