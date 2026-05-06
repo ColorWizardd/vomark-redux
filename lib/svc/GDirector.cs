@@ -25,7 +25,9 @@ namespace vomark_redux.lib.svc
         abstract public G FindGraph(string gName);
         abstract public ConcurrentDictionary<string, G> GetGraphSet();
         abstract public G CombineGraphs(string g1, string g2);
+        abstract public G CombineGraphs(List<string> g);
         abstract public void SendSentence(string inp, G g);
+        abstract public string GenSentence(G g, IPuncBehavior ip, ICapBehavior ic, int maxLen);
     }
 
     public class GraphDirector<G> : IGDirector<G> where G: IGraph
@@ -65,6 +67,21 @@ namespace vomark_redux.lib.svc
             return res;
         }
 
+        public override G CombineGraphs(List<string> g)
+        {
+            int count = g.Count;
+            if (count == 0)
+            {
+                throw new ArgumentException("Cannot combine an empty graph set");
+            }
+            G curr = FindGraph(g[0]);
+            for(int i = 1; i < count; ++i)
+            {
+                curr = CombineGraphs(g[i], g[i - 1]);
+            }
+            return curr;
+        }
+
         public override G FindGraph(string gName)
         {
             if(GraphSet.TryGetValue(gName, out G? res))
@@ -76,6 +93,10 @@ namespace vomark_redux.lib.svc
 
         public override void SendSentence(string inp, G g)
         {
+            if(inp == string.Empty)
+            {
+                return;
+            }
             List<string> wordList = Parser.Parse(inp);
             g.AddOrStrengthenEdge(Vocabulary.NODE_ROOT, wordList[0]);
             if(wordList.Count > 1)
@@ -91,6 +112,30 @@ namespace vomark_redux.lib.svc
         public override ConcurrentDictionary<string, G> GetGraphSet()
         {
             return GraphSet;
+        }
+
+        public override string GenSentence(G g, IPuncBehavior ip, ICapBehavior ic, int maxLen)
+        {
+            StringBuilder sb = new();
+            string? curr = Vocabulary.NODE_ROOT;
+            for (int i = 0; i < maxLen; ++i)
+            {
+                curr = g.GetNextNode(curr);
+                if(curr == null || curr == Vocabulary.NODE_TERM)
+                {
+                    break;
+                }
+                sb.Append(curr);
+                sb.Append(' ');
+            }
+            string res = sb.ToString().TrimEnd();
+            if(res == string.Empty)
+            {
+                return res;
+            }
+            res = ic.ApplyBehavior(res);
+            res = ip.ApplyBehavior(res);
+            return res;
         }
     }
 
@@ -123,5 +168,69 @@ namespace vomark_redux.lib.svc
             return res;
         }
 
+    }
+
+    public interface ICapBehavior
+    {
+        /**
+         * Used to dictate capitalization behavior. 
+         */
+        public abstract string ApplyBehavior(string inp);
+    }
+
+    public class FirstCap : ICapBehavior
+    {
+        public string ApplyBehavior(string inp)
+        {
+            return string.Concat(inp[0].ToString().ToUpper(), inp.AsSpan(1));
+        }
+    }
+
+    public class AllCap : ICapBehavior
+    {
+        public string ApplyBehavior(string inp)
+        {
+            return inp.ToUpper();
+        }
+    }
+
+    public class LowerCap : ICapBehavior
+    {
+        public string ApplyBehavior(string inp)
+        {
+            return inp.ToLower();
+        }
+    }
+
+    public interface IPuncBehavior
+    {
+        /**
+         * Used to dictate ending punctuation 
+         */
+        public abstract string ApplyBehavior(string inp);
+    }
+
+    public class EndPeriod : IPuncBehavior
+    {
+        public string ApplyBehavior(string inp)
+        {
+            return string.Concat(inp, '.');
+        }
+    }
+
+    public class EndExc : IPuncBehavior
+    {
+        public string ApplyBehavior(string inp)
+        {
+            return string.Concat(inp, '!');
+        }
+    }
+
+    public class EndQ : IPuncBehavior
+    {
+        public string ApplyBehavior(string inp)
+        {
+            return string.Concat(inp, '?');
+        }
     }
 }

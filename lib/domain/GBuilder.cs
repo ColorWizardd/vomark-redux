@@ -8,11 +8,11 @@ namespace vomark_redux.lib.domain
 {
     public abstract class IGBuilder<G> where G : IGraph
     {
-        internal IVocabulary? Vocabulary { get; set; }
-        internal ITokenizer? Tokenizer { get; set; }
-        internal ITraversal? Traversal { get; set; }
-        internal Random? Random { get; set; }
-        internal string? Name { get; set; }
+        public IVocabulary? Vocabulary { get; set; }
+        public ITokenizer? Tokenizer { get; set; }
+        public ITraversal? Traversal { get; set; }
+        public Random? Random { get; set; }
+        public string? Name { get; set; }
 
         public IGBuilder() { }
         public abstract IGBuilder<G> AddTokenizer(ITokenizer t);

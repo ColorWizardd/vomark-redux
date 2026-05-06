@@ -70,6 +70,16 @@ namespace vomark_redux.Tests
                 _vocabulary = new FakeVocabulary(_tokenizer);
                 _traversal = new FakeTraversal();
             }
+
+            public FakeGraph(FakeGraphBulder gb) : base()
+            {
+                _vocabulary = gb.Vocabulary;
+                _tokenizer = gb.Tokenizer;
+                _traversal = gb.Traversal;
+                _rand = gb.Random;
+                _name = gb.Name;
+            }
+
             public override void AddOrStrengthenEdge(string from, string to, int weight = 1)
             {
                 base.AddOrStrengthenEdge(from, to);
@@ -107,7 +117,45 @@ namespace vomark_redux.Tests
             public List<string> Parse(string inp)
             {
                 return [.. inp.Split(" ")];
-            } 
+            }
+        }
+
+        public class FakeGraphBulder : IGBuilder<FakeGraph>
+        {
+            public override IGBuilder<FakeGraph> AddName(string name)
+            {
+                this.Name = name;
+                return this;
+            }
+
+            public override IGBuilder<FakeGraph> AddRandom(Random rand)
+            {
+                this.Random = rand;
+                return this;
+            }
+
+            public override IGBuilder<FakeGraph> AddTokenizer(ITokenizer t)
+            {
+                this.Tokenizer = t;
+                return this;
+            }
+
+            public override IGBuilder<FakeGraph> AddTraversal(ITraversal t)
+            {
+                this.Traversal = t;
+                return this;
+            }
+
+            public override IGBuilder<FakeGraph> AddVocabulary(IVocabulary v)
+            {
+                this.Vocabulary = v;
+                return this;
+            }
+
+            public override FakeGraph Build()
+            {
+                return new FakeGraph(this);
+            }
         }
 
         internal class FakeTravData
@@ -118,6 +166,22 @@ namespace vomark_redux.Tests
                 res.TryAdd("test1", 1);
                 res.TryAdd("test2", 5);
                 return res;
+            }
+        }
+
+        internal class FakePuncBehavior : IPuncBehavior
+        {
+            public string ApplyBehavior(string inp)
+            {
+                return string.Concat(inp, ".");
+            }
+        }
+
+        internal class FakeCapBehavior : ICapBehavior
+        {
+            public string ApplyBehavior(string inp)
+            {
+                return inp;
             }
         }
     }
