@@ -2,7 +2,7 @@
 [![VOMARK-REDUX](https://raw.githubusercontent.com/colorwizardd/vomark-redux/master/assets/VomLogo.png)](#readme)
 
 [![build status](https://github.com/ColorWizardd/vomark-redux/actions/workflows/dotnet.yml/badge.svg?branch=master&event=status)](https://github.com/ColorWizardd/vomark-redux/actions/workflows/dotnet.yml)
-![test coverage](https://img.shields.io/badge/coverage-0%25-red)
+![test coverage](https://img.shields.io/badge/coverage-95.4%25-red)
 
 </div>
 
