@@ -1,6 +1,7 @@
 <div align="center">
-[![VOMARK-REDUX](https://raw.githubusercontent.com/colorwizardd/vomark-redux/master/assets/VomLogo.png)](#readme)
-
+<img width="697" height="138" alt="image" src="https://github.com/colorwizardd/vomark-redux/raw/master/assets/VomLogo.png" />
+<hr>
+  
 [![Build-Master](https://github.com/ColorWizardd/vomark-redux/actions/workflows/dotnet.yml/badge.svg?branch=master)](https://github.com/ColorWizardd/vomark-redux/actions/workflows/dotnet.yml)
 ![test coverage](https://img.shields.io/badge/test--coverage-95.4%25-passing)
 
