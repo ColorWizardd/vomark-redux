@@ -12,7 +12,7 @@ on:
     branches: [ "master" ]
 
 env:
-  REPORT_DEST: coverage/
+  REPORT_DEST: coverage
 
 jobs:
   build:
@@ -39,7 +39,7 @@ jobs:
       run: | 
         dotnet test --no-build --verbosity normal \
         /p:CollectCoverage=True \
-        /p:CoverletOutput=./$REPORT_DEST \
+        /p:CoverletOutput=./$REPORT_DEST/ \
         /p:CoverletOutputFormat=cobertura
 
     - name: Install report generator
