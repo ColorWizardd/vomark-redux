@@ -6,11 +6,19 @@ name: Build-Master
 on:
   push:
     branches: [ "master" ]
+    paths-ignore:
+      - README.md
   pull_request:
     branches: [ "master" ]
 
+env:
+  REPORT_DEST: coverage
+
 jobs:
   build:
+
+    permissions:
+      contents: write
 
     runs-on: ubuntu-latest
 
@@ -20,9 +28,55 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 9.0.x
+
     - name: Restore dependencies
       run: dotnet restore
+
     - name: Build
       run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+
+    - name: Test with coverage
+      run: |
+        dotnet test ./vomark-redux.Tests \
+        /p:CollectCoverage=True \
+        /p:CoverletOutput=./$REPORT_DEST/ \
+        /p:CoverletOutputFormat=cobertura
+
+    - name: Install report generator
+      run: dotnet tool install -g dotnet-reportgenerator-globaltool
+    
+    - name: Generate coverage report
+      run: | 
+        reportgenerator \
+        -reports:./vomark-redux.Tests/$REPORT_DEST/coverage.cobertura.xml \
+        -targetdir:./vomark-redux.Tests/$REPORT_DEST/reports \
+        -reporttypes:textsummary
+
+    - name: Get line coverage
+      id: coverage
+      run: | 
+        COVERAGE=$(grep "Line coverage" ./vomark-redux.Tests/${REPORT_DEST}/reports/Summary.txt | sed -E 's/.*: ([0-9.]+)%.*/\1/')
+        echo "coverage=$COVERAGE" >> $GITHUB_OUTPUT
+
+    - name: Ensure Master is current
+      run: |
+        git config user.name "github-actions"
+        git config user.email "actions@github.com"
+        git fetch origin
+        git checkout master
+        git reset --hard origin/master
+
+    - name: Update coverage badge
+      run: |
+        COVERAGE=${{ steps.coverage.outputs.coverage }}
+        sed -i -E "s/coverage-[0-9]+%25/coverage-${COVERAGE}%25/" README.md
+
+    - name: Commit badge update
+      run: |
+        git add vomark-redux.Tests/coverage/
+        git add README.md
+        git commit -m "AUTOMATED - Updated coverage badge [skip ci]"
+        git push origin HEAD:master
+
+
+
