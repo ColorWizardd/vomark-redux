@@ -1,27 +1,28 @@
 Summary
-  Generated on: 05/06/2026 - 01:50:21
-  Coverage date: 05/06/2026 - 01:50:18
+  Generated on: 05/06/2026 - 21:26:55
+  Coverage date: 05/06/2026 - 21:26:53
   Parser: Cobertura
   Assemblies: 1
-  Classes: 14
-  Files: 5
-  Line coverage: 95.4%
-  Covered lines: 336
-  Uncovered lines: 16
-  Coverable lines: 352
-  Total lines: 624
-  Branch coverage: 84% (84 of 100)
-  Covered branches: 84
-  Total branches: 100
-  Method coverage: 98.4% (62 of 63)
-  Full method coverage: 92% (58 of 63)
-  Covered methods: 62
-  Fully covered methods: 58
-  Total methods: 63
+  Classes: 24
+  Files: 6
+  Line coverage: 93%
+  Covered lines: 512
+  Uncovered lines: 38
+  Coverable lines: 550
+  Total lines: 938
+  Branch coverage: 81.3% (122 of 150)
+  Covered branches: 122
+  Total branches: 150
+  Method coverage: 98.9% (90 of 91)
+  Full method coverage: 86.8% (79 of 91)
+  Covered methods: 90
+  Fully covered methods: 79
+  Total methods: 91
 
-vomark-redux                                                                                                                                   95.4%
-  System.Text.RegularExpressions.Generated                                                                                                     96.2%
+vomark-redux                                                                                                                                     93%
+  System.Text.RegularExpressions.Generated                                                                                                     90.5%
   System.Text.RegularExpressions.Generated.<RegexGenerator_g>F52859F7BD9911AA425FA65C5E8EE356805DA3153EB9A73659565FC23EE4558FE__RegPattern_0   95.5%
+  System.Text.RegularExpressions.Generated.<RegexGenerator_g>F52859F7BD9911AA425FA65C5E8EE356805DA3153EB9A73659565FC23EE4558FE__RegPattern_1   82.1%
   vomark_redux.lib.domain.CountTokenizer                                                                                                        100%
   vomark_redux.lib.domain.Graph                                                                                                                84.4%
   vomark_redux.lib.domain.GraphBuilder                                                                                                          100%
@@ -31,6 +32,15 @@ vomark-redux                                                                    
   vomark_redux.lib.domain.IVocabulary                                                                                                           100%
   vomark_redux.lib.domain.Vocabulary                                                                                                            100%
   vomark_redux.lib.domain.WeightedRandTraversal                                                                                                93.7%
+  vomark_redux.lib.svc.AllCap                                                                                                                   100%
   vomark_redux.lib.svc.BasicPuncParser                                                                                                          100%
-  vomark_redux.lib.svc.GraphDirector<T>                                                                                                        95.8%
+  vomark_redux.lib.svc.EndExc                                                                                                                   100%
+  vomark_redux.lib.svc.EndPeriod                                                                                                                100%
+  vomark_redux.lib.svc.EndQ                                                                                                                     100%
+  vomark_redux.lib.svc.FirstCap                                                                                                                 100%
+  vomark_redux.lib.svc.GraphDirector<T>                                                                                                        95.1%
   vomark_redux.lib.svc.IGDirector<T>                                                                                                            100%
+  vomark_redux.lib.svc.IVomBrain<T>                                                                                                             100%
+  vomark_redux.lib.svc.LowerCap                                                                                                                 100%
+  vomark_redux.lib.svc.PuncDataParser                                                                                                           100%
+  vomark_redux.lib.svc.VomBrain<T>                                                                                                              100%
