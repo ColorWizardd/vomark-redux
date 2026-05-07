@@ -80,8 +80,13 @@ jobs:
         if git diff --cached --quiet; then
           echo "No changes to code coverage"
         else
+        if [ "${GITHUB_EVENT_NAME}" = "pull_request" ]; then
+          BRANCH="${GITHUB_HEAD_REF}"
+        else
+          BRANCH="${GITHUB_REF_NAME}"
+        fi
           git commit -m "AUTOMATED - Updated coverage badge [skip ci]"
-          git push
+          git push origin HEAD:${BRANCH}
         fi
 
 
