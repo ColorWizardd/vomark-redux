@@ -78,8 +78,9 @@ jobs:
         if git diff --cached --quiet; then
           echo "No changes to code coverage"
         else
+          BRANCH_NAME="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
           git commit -m "AUTOMATED - Updated coverage badge [skip ci]"
-          git push HEAD:${GITHUB_REF_NAME}
+          git push HEAD:${BRANCH_NAME}
         fi
 
 
