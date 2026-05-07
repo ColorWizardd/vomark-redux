@@ -25,9 +25,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-      with: 
-        ref: master
-        fetch-depth: 0
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
@@ -56,19 +53,32 @@ jobs:
         -targetdir:./vomark-redux.Tests/$REPORT_DEST/reports \
         -reporttypes:textsummary
 
+    - name: Set user config
+      run: |
+        git config user.name "github-actions"
+        git config user.email "actions@github.com"
+
+    - name: Push new coverage report
+      run: |
+        git add -A
+        if git diff --cached --quiet; then
+          echo "No changes to code coverage"
+        else
+          git commit -m "AUTOMATED - Updated coverage report [skip ci]"
+          git push
+        fi
+
     - name: Get line coverage
       id: coverage
       run: | 
         COVERAGE=$(grep "Line coverage" ./vomark-redux.Tests/${REPORT_DEST}/reports/Summary.txt | sed -E 's/.*: ([0-9.]+)%.*/\1/')
         echo "coverage=$COVERAGE" >> $GITHUB_OUTPUT
 
-    - name: Set user config
-      run: |
-        git config user.name "github-actions"
-        git config user.email "actions@github.com"
 
     - name: Update coverage badge
       run: |
+        git checkout master
+        git pull
         COVERAGE=${{ steps.coverage.outputs.coverage }}
         COVERAGE=$(printf "%.0f" $COVERAGE)
         sed -i -E "s/coverage-[0-9]+%25/coverage-${COVERAGE}%25/" README.md
