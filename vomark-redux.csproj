@@ -5,6 +5,16 @@
     <RootNamespace>vomark_redux</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <Title>Vomark-Redux</Title>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageProjectUrl>github.com/colorwizardd/vomark-redux</PackageProjectUrl>
+    <Company />
+    <Authors>ColorWizardd</Authors>
+    <Version>1.0.0</Version>
+    <Description>A markov-chain-based random sentence generator library for C#.</Description>
+    <PackageReleaseNotes>First release!</PackageReleaseNotes>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +29,17 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="ReportGenerator" Version="5.5.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
