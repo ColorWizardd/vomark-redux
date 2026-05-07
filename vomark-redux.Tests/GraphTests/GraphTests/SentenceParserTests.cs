@@ -14,7 +14,7 @@ namespace vomark_redux.Tests.GraphTests.GraphTests
         public void TestBasicPuncParser()
         {
             BasicPuncParser bp = new();
-            List<string> expected = ["it", "'", "s", "a", "sentence", "!"];
+            List<string> expected = ["it's", "a", "sentence", "!"];
             var resList = bp.Parse("it's a sentence!");
             Assert.Equal(expected.Count, resList.Count);
             for(int i = 0; i < resList.Count; ++i)
