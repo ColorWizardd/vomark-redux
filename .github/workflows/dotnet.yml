@@ -58,16 +58,6 @@ jobs:
         git config user.name "github-actions"
         git config user.email "actions@github.com"
 
-    - name: Push new coverage report
-      run: |
-        git add -A
-        if git diff --cached --quiet; then
-          echo "No changes to code coverage"
-        else
-          git commit -m "AUTOMATED - Updated coverage report [skip ci]"
-          git push
-        fi
-
     - name: Get line coverage
       id: coverage
       run: | 
@@ -91,7 +81,7 @@ jobs:
           echo "No changes to code coverage"
         else
           git commit -m "AUTOMATED - Updated coverage badge [skip ci]"
-          git push
+          git push HEAD:${GITHUB_REF_NAME}
         fi
 
 
