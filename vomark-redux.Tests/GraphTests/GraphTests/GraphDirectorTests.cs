@@ -193,4 +193,27 @@ namespace vomark_redux.Tests.GraphTests.GraphTests
         }
 
     }
+
+    public class TestParserBehavior
+    {
+        [Fact]
+        public void TestCommaDetection()
+        {
+            BasicPuncParser bp = new();
+            string isComma = ",";
+            string notComma = "?";
+            Assert.True(bp.IsComma(isComma));
+            Assert.False(bp.IsComma(notComma));
+        }
+
+        [Fact]
+        public void TestAposDetection()
+        {
+            BasicPuncParser bp = new();
+            string isApos = "'";
+            string notApos = ",";
+            Assert.True(bp.IsApos(isApos));
+            Assert.False(bp.IsApos(notApos));
+        }
+    }
 }
