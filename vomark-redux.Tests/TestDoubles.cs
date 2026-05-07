@@ -114,10 +114,22 @@ namespace vomark_redux.Tests
         // FAKE JUST SPLITS ON SPACES!!!
         internal class FakeParser : ISentenceParser
         {
+            public bool IsApos(string inp)
+            {
+                return inp == "'";
+            }
+
+            public bool IsComma(string inp)
+            {
+                return inp == ",";
+            }
+
             public List<string> Parse(string inp)
             {
                 return [.. inp.Split(" ")];
             }
+
+            
         }
 
         public class FakeGraphBulder : IGBuilder<FakeGraph>

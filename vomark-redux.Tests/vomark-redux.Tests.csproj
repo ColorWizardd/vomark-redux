@@ -31,4 +31,10 @@
     <Folder Include="GraphTests\TraversalTests\" />
   </ItemGroup>
 
+<ItemGroup>
+	<None Update="*.txt">
+		<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	</None>
+</ItemGroup>
+
 </Project>
