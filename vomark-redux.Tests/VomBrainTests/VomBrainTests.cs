@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using vomark_redux.lib.domain;
 using vomark_redux.lib.svc;
+using Xunit.Abstractions;
 using static vomark_redux.Tests.TestDoubles;
 
 namespace vomark_redux.Tests.VomBrainTests
@@ -84,6 +85,70 @@ namespace vomark_redux.Tests.VomBrainTests
                     ["fake1"], new FakePuncBehavior(), new FakeCapBehavior()
                     ));
                 Assert.Equal("No graph found with the given name", err.Message);
+            }
+        }
+
+        public class VomBrainFullRun(ITestOutputHelper helper)
+        {
+            // These are not treated as tests per se, but runtime checks to make sure we're not slow.
+            // Also, we're 100% testing concrete implementation for ALL components here.
+            private readonly ITestOutputHelper _helper = helper;
+            private readonly string TEST_PATH_1 = "../../../VomBrainTests/VBTestFile1.txt";
+            private readonly string TEST_PATH_2 = "../../../VomBrainTests/VBTestFile2.txt";
+            private readonly int TEST_GEN_COUNT = 20;
+
+            [Fact]
+            public void TestFullRun()
+            {
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+                var g1Lines = File.ReadAllLines(TEST_PATH_1);
+                var g2Lines = File.ReadAllLines(TEST_PATH_2);
+
+                BasicPuncParser parser = new();
+                PuncDataParser dParser = new();
+
+                VomBrain<Graph> vb = new(new GraphDirector<Graph>(parser));
+                GraphBuilder gb1 = new();
+                Graph g1 = gb1.AddTraversal(new WeightedRandTraversal())
+                    .AddVocabulary(new Vocabulary(new CountTokenizer()))
+                    .AddRandom(new Random())
+                    .AddName("test1")
+                    .Build();
+
+                GraphBuilder gb2 = new();
+                Graph g2 = gb2.AddTraversal(new WeightedRandTraversal())
+                    .AddVocabulary(new Vocabulary(new CountTokenizer()))
+                    .AddRandom(new Random())
+                    .AddName("test2")
+                    .Build();
+
+                vb.AddExistingGraph(g1);
+                vb.AddExistingGraph(g2);
+
+                foreach(string line in g1Lines)
+                {
+                    vb.AddData(line, ["test1"], dParser);
+                }
+
+                foreach(string line in g2Lines)
+                {
+                    vb.AddData(line, ["test2"], dParser);
+                }
+
+                watch.Stop();
+
+                _helper.WriteLine($"TIME TO READ/ADD DATA: {watch.ElapsedMilliseconds}ms");
+
+                watch.Restart();
+
+                for(int i = 0; i < TEST_GEN_COUNT; ++i)
+                {
+                    _helper.WriteLine("\n" + vb.GenSentence(["test1", "test2"], new EndPeriod(), new FirstCap()));
+                }
+
+                watch.Stop();
+
+                _helper.WriteLine($"TIME TO WRITE {TEST_GEN_COUNT} SENTENCES: {watch.ElapsedMilliseconds}ms");
             }
         }
     }

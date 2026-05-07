@@ -1,28 +1,28 @@
 Summary
-  Generated on: 05/06/2026 - 21:29:24
-  Coverage date: 05/06/2026 - 21:29:21
+  Generated on: 05/07/2026 - 20:29:19
+  Coverage date: 05/07/2026 - 20:29:17
   Parser: Cobertura
   Assemblies: 1
   Classes: 24
   Files: 6
-  Line coverage: 93%
-  Covered lines: 512
-  Uncovered lines: 38
-  Coverable lines: 550
-  Total lines: 938
-  Branch coverage: 81.3% (122 of 150)
-  Covered branches: 122
-  Total branches: 150
-  Method coverage: 98.9% (90 of 91)
-  Full method coverage: 86.8% (79 of 91)
-  Covered methods: 90
-  Fully covered methods: 79
-  Total methods: 91
+  Line coverage: 89.9%
+  Covered lines: 615
+  Uncovered lines: 69
+  Coverable lines: 684
+  Total lines: 1075
+  Branch coverage: 81.1% (159 of 196)
+  Covered branches: 159
+  Total branches: 196
+  Method coverage: 97.8% (93 of 95)
+  Full method coverage: 84.2% (80 of 95)
+  Covered methods: 93
+  Fully covered methods: 80
+  Total methods: 95
 
-vomark-redux                                                                                                                                     93%
-  System.Text.RegularExpressions.Generated                                                                                                     90.5%
-  System.Text.RegularExpressions.Generated.<RegexGenerator_g>F52859F7BD9911AA425FA65C5E8EE356805DA3153EB9A73659565FC23EE4558FE__RegPattern_0   95.5%
-  System.Text.RegularExpressions.Generated.<RegexGenerator_g>F52859F7BD9911AA425FA65C5E8EE356805DA3153EB9A73659565FC23EE4558FE__RegPattern_1   82.1%
+vomark-redux                                                                                                                                   89.9%
+  System.Text.RegularExpressions.Generated                                                                                                       85%
+  System.Text.RegularExpressions.Generated.<RegexGenerator_g>F52859F7BD9911AA425FA65C5E8EE356805DA3153EB9A73659565FC23EE4558FE__RegPattern_0   86.1%
+  System.Text.RegularExpressions.Generated.<RegexGenerator_g>F52859F7BD9911AA425FA65C5E8EE356805DA3153EB9A73659565FC23EE4558FE__RegPattern_1   83.9%
   vomark_redux.lib.domain.CountTokenizer                                                                                                        100%
   vomark_redux.lib.domain.Graph                                                                                                                84.4%
   vomark_redux.lib.domain.GraphBuilder                                                                                                          100%
@@ -38,7 +38,7 @@ vomark-redux                                                                    
   vomark_redux.lib.svc.EndPeriod                                                                                                                100%
   vomark_redux.lib.svc.EndQ                                                                                                                     100%
   vomark_redux.lib.svc.FirstCap                                                                                                                 100%
-  vomark_redux.lib.svc.GraphDirector<T>                                                                                                        95.1%
+  vomark_redux.lib.svc.GraphDirector<T>                                                                                                        95.4%
   vomark_redux.lib.svc.IGDirector<T>                                                                                                            100%
   vomark_redux.lib.svc.IVomBrain<T>                                                                                                             100%
   vomark_redux.lib.svc.LowerCap                                                                                                                 100%

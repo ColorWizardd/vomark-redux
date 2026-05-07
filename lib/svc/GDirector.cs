@@ -98,6 +98,10 @@ namespace vomark_redux.lib.svc
                 return;
             }
             List<string> wordList = Parser.Parse(inp);
+            if(wordList.Count == 0)
+            {
+                return;
+            }
             g.AddOrStrengthenEdge(Vocabulary.NODE_ROOT, wordList[0]);
             if(wordList.Count > 1)
             {
@@ -125,8 +129,10 @@ namespace vomark_redux.lib.svc
                 {
                     break;
                 }
+                if (Parser.IsComma(curr) || Parser.IsApos(curr)) { sb.Remove(sb.Length - 1, 1); }
                 sb.Append(curr);
-                sb.Append(' ');
+                if (!Parser.IsApos(curr)) { sb.Append(' '); }
+                
             }
             string res = sb.ToString().TrimEnd();
             if(res == string.Empty)
@@ -145,17 +151,29 @@ namespace vomark_redux.lib.svc
          * Meant to parse ONE SENTENCE AT A TIME
          */
         public abstract List<string> Parse(string inp);
+        public abstract bool IsApos(string inp);
+        public abstract bool IsComma(string inp);
     }
 
     /** 
-     * Parses all punctuation as separate tokens.
-     * Meaning "it'd" -> ["it", "'", "d"]
+     * Parses apostrophes that are inside words.
+     * Kills quotation marks and words that end with apostrophes.
      */
 
     public partial class BasicPuncParser : ISentenceParser
     {
-        [GeneratedRegex("\\w+|[^\\w\\s]", RegexOptions.IgnoreCase, "en-US")]
+        [GeneratedRegex(@"\w+(?:'\w+)?|[^\w\s'""]", RegexOptions.IgnoreCase, "en-US")]
         private static partial Regex RegPattern { get; }
+
+        public bool IsApos(string inp)
+        {
+            return inp == "'"; 
+        }
+
+        public bool IsComma(string inp)
+        {
+            return inp == ",";
+        }
 
         public List<string> Parse(string inp)
         {
@@ -167,7 +185,7 @@ namespace vomark_redux.lib.svc
             }
             return res;
         }
-
+        
     }
 
     public interface ICapBehavior
