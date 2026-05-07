@@ -3,7 +3,7 @@
 <hr>
   
 [![Build-Master](https://github.com/ColorWizardd/vomark-redux/actions/workflows/dotnet.yml/badge.svg?branch=master)](https://github.com/ColorWizardd/vomark-redux/actions/workflows/dotnet.yml)
-![test coverage](https://img.shields.io/badge/test--coverage-95.4%25-passing)
+![test coverage](https://img.shields.io/badge/test--coverage-89.9%25-passing)
 ![NuGet Version](https://img.shields.io/nuget/v/vomark-redux)
 ![NuGet Downloads](https://img.shields.io/nuget/dt/vomark-redux)
 
