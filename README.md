@@ -10,6 +10,3 @@
 </div>
 
 **vomark-redux** is a markov-chain based random sentence generator library with for .NET with support for a diverse array of input methods.
-
-## UNDER CONSTRUCTION
-This project is under construction, but progress is going fast!
