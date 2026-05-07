@@ -70,8 +70,7 @@ jobs:
     - name: Update coverage badge
       run: |
         COVERAGE=${{ steps.coverage.outputs.coverage }}
-        COVERAGE=$(printf "%.0f" $COVERAGE)
-        sed -i -E "s/coverage-[0-9]+%25/coverage-${COVERAGE}%25/" README.md
+        sed -i -E "s/coverage-[0-9.]+%25/coverage-${COVERAGE}%25/" README.md
 
     - name: Commit badge update
       run: |
