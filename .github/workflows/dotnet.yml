@@ -67,8 +67,6 @@ jobs:
 
     - name: Update coverage badge
       run: |
-        git checkout master
-        git pull
         COVERAGE=${{ steps.coverage.outputs.coverage }}
         COVERAGE=$(printf "%.0f" $COVERAGE)
         sed -i -E "s/coverage-[0-9]+%25/coverage-${COVERAGE}%25/" README.md
