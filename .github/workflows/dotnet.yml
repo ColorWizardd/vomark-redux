@@ -80,6 +80,8 @@ jobs:
         else
           BRANCH_NAME="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
           git commit -m "AUTOMATED - Updated coverage badge [skip ci]"
+          git fetch origin "${BRANCH_NAME}"
+          git rebase "origin/${BRANCH_NAME}"
           git push origin HEAD:${BRANCH_NAME}
         fi
 
