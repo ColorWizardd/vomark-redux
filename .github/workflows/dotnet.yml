@@ -75,17 +75,12 @@ jobs:
 
     - name: Commit badge update
       run: |
-        BRANCH_NAME="${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}"
-        git fetch origin "${BRANCH_NAME}"
-        git checkout "${BRANCH_NAME}"
-        
         git add -A
-
         if git diff --cached --quiet; then
           echo "No changes to code coverage"
         else
           git commit -m "AUTOMATED - Updated coverage badge [skip ci]"
-          git push --force-with-lease origin HEAD:${BRANCH_NAME}
+          git push origin HEAD:${GITHUB_HEAD_REF:-${GITHUB_REF_NAME}}
         fi
 
 
